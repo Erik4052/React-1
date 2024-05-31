@@ -14,10 +14,10 @@ export const CallbackHook = () => {
         [],
     );
 
-/*     useEffect(() => {
-        increment();
-    },[increment])
- */
+    /*     useEffect(() => {
+            increment();
+        },[increment])
+     */
 
     /*    const increment = () => {
            setCounter(counter + 1);
