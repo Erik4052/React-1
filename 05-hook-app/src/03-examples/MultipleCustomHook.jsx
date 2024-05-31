@@ -1,21 +1,38 @@
-import { useFetch } from "../hooks/useFetch"
+import { useFetch } from "../hooks/useFetch";
+import { useCounter } from "../hooks/useCounter";
+import { LoadingMessage } from "./LoadingMessage";
+import { PokemonCard } from "../03-examples/PokemonCard";
+
 export const MultipleCustomHook = () => {
-    const { data, hasError, isLoading } = useFetch('https://pokeapi.co/api/v2/pokemon/3');
+
+    const {counter, decrement, increment} = useCounter(1);
+    const { data, hasError, isLoading } = useFetch(`https://pokeapi.co/api/v2/pokemon/${counter}`);
 
 
     return (
         <>
             <h1>Pokemon Info</h1>
             <hr />
-            {isLoading && <p>Loading...</p>}
+            {
+            isLoading 
+            ? <LoadingMessage/> 
+            : <PokemonCard 
+            id={counter} 
+            name={data.name} 
+            sprites={[
+                data.sprites.front_default,
+                data.sprites.front_shiny,
+                data.sprites.back_default,
+                data.sprites.back_shiny
+            ]}/>}
             {/* <pre>{JSON.stringify(data, null, 2)}</pre> */}
             <h2>{data?.name}</h2>
 
-            <button className="btn btn-primary mt-2">
+            <button className="btn btn-primary mt-2" onClick={() => counter > 1 ? decrement() : null}>
                 Previous
             </button>
 
-            <button className="btn btn-primary mt-2">
+            <button className="btn btn-primary mt-2" onClick={() => increment()}>
                 Next
             </button>
         </>
